@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from .models import Book, Review, Genre
 import openpyxl # Для экспорта
 from django.apps import apps # Для получения списка моделей
+from .forms import BookForm # <--- Добавляем импорт
 
 # Главная страница + Поиск (Доп. функционал)
 def index(request):
@@ -77,3 +78,14 @@ def admin_export_view(request):
         return response
 
     return render(request, 'export.html', {'models': models_list})
+
+@login_required # Добавлять книги могут только авторизованные
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = BookForm()
+    return render(request, 'add_book.html', {'form': form})

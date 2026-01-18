@@ -7,6 +7,6 @@ admin.site.register(Book)
 
 # Для отзывов можно сделать чуть красивее (видно кто, что и рейтинг)
 @admin.register(Review)
-class ReviewAdmin(admin.site.ModelAdmin):
+class ReviewAdmin(admin.ModelAdmin):
     list_display = ('book', 'user', 'rating', 'created_at')
     list_filter = ('rating', 'created_at')

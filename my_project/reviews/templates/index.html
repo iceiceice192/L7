@@ -3,9 +3,14 @@
 {% block content %}
 <div class="row mb-4">
     <div class="col-md-8 mx-auto">
-        <h1 class="text-center mb-3">Каталог книг</h1>
-        
-        <!-- Реализация ПОИСКА (один из функционалов на выбор) -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="text-center">Каталог книг</h1>
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_book' %}" class="btn btn-success">
+                    + Добавить книгу
+                </a>
+            {% endif %}
+        </div>        
         <form method="GET" action="{% url 'index' %}" class="d-flex gap-2">
             <input class="form-control" type="text" name="q" placeholder="Поиск книги по названию..." value="{{ request.GET.q|default:'' }}">
             <button class="btn btn-primary" type="submit">Найти</button>
@@ -26,7 +31,6 @@
                 <p class="card-text">{{ book.description|truncatewords:20 }}</p>
             </div>
             <div class="card-footer bg-white border-top-0">
-                <!-- Ссылка на основную услугу (страницу книги с отзывами) -->
                 <a href="{% url 'book_detail' book.pk %}" class="btn btn-outline-primary w-100">
                     Читать отзывы / Оценить
                 </a>

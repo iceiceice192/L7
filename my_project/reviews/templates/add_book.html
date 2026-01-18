@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Добавить новую книгу</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Название книги</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Жанр</label>
+                        {{ form.genre }}
+                        <div class="form-text">Если список пуст, попросите админа добавить жанры.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Описание</label>
+                        {{ form.description }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Сохранить книгу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
