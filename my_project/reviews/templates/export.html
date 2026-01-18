@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Экспорт данных</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Выберите таблицу:</label>
+        <select name="model" class="form-select" id="modelSelect" onchange="updateFields()">
+            <option value="" disabled selected>-- Выберите --</option>
+            {% for m in models %}
+                <option value="{{ m }}">{{ m }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- В реальном проекте поля подгружаются через AJAX, 
+         здесь для простоты предложим ввести названия полей вручную или выбрать основные -->
+    <div class="mb-3">
+        <label>Выберите поля (зажмите Ctrl для выбора нескольких):</label>
+        <!-- Для простоты реализации демо: жестко зададим популярные поля. 
+             Для полной динамики нужен JS + API endpoint -->
+        <select name="fields" multiple class="form-select" required style="height: 150px;">
+            <option value="id">ID</option>
+            <option value="title">Название/Имя (title/username)</option>
+            <option value="text">Текст (для отзывов)</option>
+            <option value="rating">Рейтинг</option>
+            <option value="created_at">Дата создания</option>
+        </select>
+        <small class="text-muted">Убедитесь, что выбранные поля существуют в выбранной модели.</small>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Скачать XLSX</button>
+</form>
+{% endblock %}
